@@ -89,7 +89,7 @@ class AnimeControllerTest {
 
     @Test
     @DisplayName("findById returns anime when successful")
-    void findById_ReturnsfAnime_WhenSuccessful(){
+    void findById_ReturnsAnime_WhenSuccessful(){
         Long expectedId = AnimeCreator.createValidAnime().getId();
 
         Anime anime = animeController.findById(1).getBody();
@@ -97,6 +97,21 @@ class AnimeControllerTest {
         Assertions.assertThat(anime).isNotNull();
 
         Assertions.assertThat(anime.getId()).isNotNull().isEqualTo(expectedId);
+    }
+
+    @Test
+    @DisplayName("findByName returns a list anime when sucessful")
+    void findByName_ReturnsListOfAnimes_WhenSuccessful(){
+        String expectedName = AnimeCreator.createValidAnime().getName();
+
+        List<Anime> animes = animeController.findByName("Anime").getBody();
+
+        Assertions.assertThat(animes)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(1);
+
+        Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
     }
 
     @Test
